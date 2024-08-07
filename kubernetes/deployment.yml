@@ -1,0 +1,86 @@
+# kubernetes/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+      - name: auth-service
+        image: auth
+        ports:
+        - containerPort: 8000
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: users-service
+  template:
+    metadata:
+      labels:
+        app: users-service
+    spec:
+      containers:
+      - name: users-service
+        image: users
+        ports:
+        - containerPort: 8000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        image: product_service
+        ports:
+        - containerPort: 8001
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+      - name: order-service
+        image: order_service
+        ports:
+        - containerPort: 8002
