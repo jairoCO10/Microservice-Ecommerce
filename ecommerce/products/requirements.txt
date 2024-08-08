@@ -3,8 +3,16 @@ uvicorn
 sqlalchemy
 pydantic
 requests
+bcrypt
 env
 PyMySQL
 websockets
 socketio
 pydantic_core
+cryptography
+python-jose
+pytz
+passlib
+pytest
+python-dotenv
+pika

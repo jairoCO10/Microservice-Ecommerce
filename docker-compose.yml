@@ -16,18 +16,25 @@ services:
     ports:
       - "8001:8001"
   
-  # rabbitmq:
-  #   image: rabbitmq:3-management
-  #   container_name: rabbit-mq
-  #   ports:
-  #     - "5672:5672"
-  #     - "15672:15672"
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
 
-  # product_service:
-  #   build:
-  #     context: ./ecommerce/product_service
-  #   ports:
-  #     - "8001:8002"
+
+  products:
+    container_name: products
+    build:
+      context: ./ecommerce/products
+    ports:
+      - "8002:3000"  # Asegúrate de que el puerto 3000 coincide con el puerto en el que corre NestJS
+    depends_on:
+      - postgres
 
   # order_service:
   #   build:

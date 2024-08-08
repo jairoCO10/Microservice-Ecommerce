@@ -15,3 +15,4 @@ pytz
 passlib
 pytest
 python-dotenv
+pika

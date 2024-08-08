@@ -6,9 +6,27 @@ from core.usecases.user_usecases import UserUseCase
 from entrypoints.schemas.user_schemas import  UserCreate, UserRead
 from infrastructure.database import Connect
 from interface_adapters.dependencies.jwt import get_current_user
-
+import pika
 
 router = APIRouter()
+
+def callback(ch, method, properties, body):
+    print(f" [x] Received {body}")
+
+def receive_login_messages():
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    channel = connection.channel()
+    channel.queue_declare(queue='login_queue')
+
+    channel.basic_consume(queue='login_queue',
+                          on_message_callback=callback,
+                          auto_ack=True)
+
+    print(' [*] Waiting for messages. To exit press CTRL+C')
+    channel.start_consuming()
+
+if __name__ == "__main__":
+    receive_login_messages()
 
 
 @router.post("/register/", response_model=UserRead)
